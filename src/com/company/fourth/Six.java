@@ -8,9 +8,9 @@ public class Six extends Digit {
 
     @Override
     public void setContent() {
-        StringBuilder template1=new StringBuilder();
-        StringBuilder template2=new StringBuilder();
-        StringBuilder template3=new StringBuilder();
+        StringBuilder template1 = new StringBuilder();
+        StringBuilder template2 = new StringBuilder();
+        StringBuilder template3 = new StringBuilder();
 
         template1.append(symbol).append(symbol).append(symbol);
         template2.append(symbol).append("  ");

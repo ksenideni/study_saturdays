@@ -1,94 +1,80 @@
 package com.company.five;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Five {
-    public static int safeVolume;
-    public static int maxPrice=Integer.MAX_VALUE;
-    public static List<Item> bestList=null;
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         System.out.println("Введите количество предметов:");
         int n = Integer.parseInt(in.nextLine());
         System.out.println("Введите объем сейфа:");
-        safeVolume=Integer.parseInt(in.nextLine());
-        List<Item> list = new ArrayList<>();
+        int safeVolume = Integer.parseInt(in.nextLine());
+        Item[] items = new Item[n];
         System.out.println("Вводите название, объем, ценность предметов");
         for (int i = 0; i < n; i++) {
-            list.add(
-                    new Item(
-                            in.nextLine(),
-                            Integer.parseInt(in.nextLine()),
-                            Integer.parseInt(in.nextLine())
-                    )
+            items[i] = new Item(
+                    in.nextLine(),
+                    Integer.parseInt(in.nextLine()),
+                    Integer.parseInt(in.nextLine())
+
             );
         }
-        search(list);
-        System.out.println("Наилучший набор предметов:");
-        System.out.println(bestList);
+        Safe[][] safe = new Safe[n + 1][safeVolume + 1];
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < safeVolume + 1; j++) {
+                if (i == 0 || j == 0) { //нулевые строки заполним нулями
+                    safe[i][j] = new Safe(new Item[]{}, 0);
+                    continue;
+                }
+                if (i == 1) {//первая строка - на выбор только один предмет
+                    safe[i][j] = items[0].getVolume() <= j ? new Safe(new Item[]{items[0]}, items[0].getPrice())
+                            : new Safe(new Item[]{}, 0);
+                    continue;
+                }
 
-    }
-
-    public static int calcVolume(List<Item> itemList) {
-        int sum = 0;
-        for (Item i : itemList) sum += i.getVolume();
-        return sum;
-    }
-
-    public static int calcPrice(List<Item> itemList) {
-        int sum = 0;
-        for (Item i : itemList) sum += i.getPrice();
-        return sum;
-    }
-
-    public static void checkBest(List<Item> itemList) {
-        if (bestList == null) {
-            if (calcVolume(itemList) <= safeVolume) {
-                bestList = itemList;
-                maxPrice = calcPrice(itemList);
-            }
-        } else {
-            if (calcVolume(itemList) <= safeVolume && calcPrice(itemList) > maxPrice) {
-                bestList = itemList;
-                maxPrice = calcPrice(itemList);
+                if (items[i - 1].getVolume() > j) {//текущий предмет не влезает - кладем предыдущий max
+                    safe[i][j] = safe[i - 1][j];
+                } else {
+                    int newPrice = items[i - 1].getPrice() + safe[i - 1][j - items[i - 1].getVolume()].getPrice();
+                    if (safe[i - 1][j].getPrice() > newPrice) {
+                        safe[i][j] = safe[i - 1][j];
+                    } else {
+                        Item[] newItems = Arrays.copyOf(safe[i - 1][j - items[i - 1].getVolume()].getItems(), safe[i - 1][j - items[i - 1].getVolume()].getItems().length + 1);
+                        System.arraycopy(new Item[]{items[i - 1]}, 0, newItems, safe[i - 1][j - items[i - 1].getVolume()].getItems().length, 1);
+                        safe[i][j] = new Safe(newItems, newPrice);
+                    }
+                }
             }
         }
-    }
 
-    public static void search(List<Item> itemList) {
-        if (itemList.size() > 0)
-            checkBest(itemList);
-        for (int i = 0; i < itemList.size(); i++) {
-            List<Item> newListItem = new ArrayList<>(itemList);
-            newListItem.remove(i);
-            search(newListItem);
-        }
+        System.out.print(safe[n][safeVolume]);
+
     }
 }
+
+
 //тест
 //Введите количество предметов:
 //        5
 //        Введите объем сейфа:
 //        8
 //        Вводите название, объем, ценность предметов
-//        блокнот
-//        1
-//        600
-//        часы
-//        2
-//        5000
-//        серьги
-//        4
-//        1500
-//        ноутбук
-//        2
-//        40000
-//        зарядка
-//        1
-//        500
-//        Наилучший набор предметов:
-//        [Item{name='часы ', volume=2, price=5000}, Item{name='серьги', volume=4, price=1500}, Item{name='ноутбук', volume=2, price=40000}]
-
+//блокнот
+//1
+//600
+//часы
+//2
+//5000
+//серьги
+//4
+//1500
+//ноутбук
+//2
+//40000
+//зарядка
+//1
+//500
+//Предметы: часы серьги ноутбук
+//        Стоимость:46500

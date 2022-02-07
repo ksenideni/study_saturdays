@@ -1,6 +1,9 @@
 package com.company.third;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Scanner;
 
 public class Third {
     public static HashSet<Character> set = new HashSet<>(Arrays.asList('у', 'е', 'ы', 'а', 'о', 'э', 'я', 'ю', 'и', 'У', 'Е', 'Ы', 'А', 'О', 'Э', 'Я', 'И', 'Ю'));
@@ -63,25 +66,25 @@ public class Third {
     }
 
 
-    public static void task3(String s){
+    public static void task3(String s) {
         StringBuilder sAsBuider = new StringBuilder(s);
-        boolean fl=false;
+        boolean fl = false;
         for (int i = 0; i < sAsBuider.length(); i++) {
             char c = sAsBuider.charAt(i);
-            if(set.contains(c) && !fl){
-                if(c>='а') {
-                    c+='А' - 'а';
+            if (set.contains(c) && !fl) {
+                if (c >= 'а') {
+                    c += 'А' - 'а';
                     sAsBuider.setCharAt(i, c);
                 }
-                fl=true;
+                fl = true;
             }
             if (c == '!' || c == '?' || c == ',' || c == '.') {
-                fl=false;
+                fl = false;
                 i++;//дальше будет пробел
                 continue;
             }
             if (c == ' ') {
-                fl=false;
+                fl = false;
                 continue;
             }
         }

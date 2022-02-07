@@ -1,18 +1,18 @@
 package com.company.fourth;
 
-public class Seven extends Digit{
+public class Seven extends Digit {
     public Seven(char symbol) {
         super(symbol);
     }
 
     @Override
     public void setContent() {
-        StringBuilder template1=new StringBuilder();
-        StringBuilder template2=new StringBuilder();
-        StringBuilder template3=new StringBuilder();
-        StringBuilder template4=new StringBuilder();
-        StringBuilder template5=new StringBuilder();
-        StringBuilder template6=new StringBuilder();
+        StringBuilder template1 = new StringBuilder();
+        StringBuilder template2 = new StringBuilder();
+        StringBuilder template3 = new StringBuilder();
+        StringBuilder template4 = new StringBuilder();
+        StringBuilder template5 = new StringBuilder();
+        StringBuilder template6 = new StringBuilder();
 
         template1.append(symbol).append(symbol).append(symbol).append(symbol).append(symbol);
         template2.append("    ").append(symbol);

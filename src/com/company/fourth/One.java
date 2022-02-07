@@ -1,15 +1,15 @@
 package com.company.fourth;
 
-public class One extends Digit{
+public class One extends Digit {
     public One(char symbol) {
         super(symbol);
     }
 
     @Override
     public void setContent() {
-        StringBuilder template1=new StringBuilder();
-        StringBuilder template2=new StringBuilder();
-        StringBuilder template3=new StringBuilder();
+        StringBuilder template1 = new StringBuilder();
+        StringBuilder template2 = new StringBuilder();
+        StringBuilder template3 = new StringBuilder();
 
         template1.append(" ").append(symbol).append(" ");
         template2.append(symbol).append(symbol).append(" ");

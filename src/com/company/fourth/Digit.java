@@ -11,12 +11,13 @@ public abstract class Digit {
 
     public Digit(char symbol) {
         this.symbol = symbol;
-        content=new ArrayList<>();
+        content = new ArrayList<>();
         setContent();
     }
-    public void printDigit(){
 
-        for (String s: content) {
+    public void printDigit() {
+
+        for (String s : content) {
             System.out.println(s);
         }
     }
